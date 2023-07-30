@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">App Compose1</string>
+    <string name="Enter_user_name">Enter user name</string>
+    <string name="Enter_your_password">enter your password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forget_password">Forget passwod?</string>
+    <string name="login">LOGIN</string>
+    <string name="login_text">Login</string>
+    <string name="please_sign_text">please sign in to continue</string>
 </resources>

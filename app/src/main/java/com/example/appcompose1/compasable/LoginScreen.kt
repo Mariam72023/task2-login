@@ -14,7 +14,10 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -22,6 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.appcompose1.R
 import com.example.appcompose1.ui.theme.*
 
 
@@ -43,27 +47,29 @@ fun LoginScreen() {
         mutableStateOf(false)
     }
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center, modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state = rememberScrollState())
             .background(color = BackgroundScreen)
     )
     {
-        Spacer(modifier = Modifier.height(150.dp))
-        Text(text = "Login", color = TextWhite, fontSize = 25.sp)
+        // Spacer(modifier = Modifier.height(40.dp))
+        Text(text = stringResource(R.string.login_text), color = TextWhite, fontSize = 25.sp)
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "please sign in to continue", color = TextWhite, fontSize = 22.sp)
+        Text(text = stringResource(R.string.please_sign_text), color = TextWhite, fontSize = 22.sp)
         Spacer(modifier = Modifier.height(20.dp))
         TextField(value = userName,
+            modifier = Modifier.clip(RoundedCornerShape(15.dp)),
             textStyle = TextStyle(fontSize = 18.sp, color = TextWhite),
             onValueChange = {
                 userName = it
             },
-            label = { Text(text = "Enter user name") }
+            label = { Text(text = stringResource(R.string.Enter_user_name)) }
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        TextField(value = password,
+        TextField(value = password, modifier = Modifier.clip(RoundedCornerShape(15.dp)),
             textStyle = TextStyle(fontSize = 18.sp, color = TextWhite),
             onValueChange = {
                 password = it
@@ -71,7 +77,7 @@ fun LoginScreen() {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 
-            label = { Text(text = "enter your password") },
+            label = { Text(text = stringResource(R.string.Enter_your_password)) },
             trailingIcon = {
                 IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                     Icon(
@@ -81,39 +87,45 @@ fun LoginScreen() {
                 }
             }
         )
-        Spacer(modifier = Modifier.height(80.dp))
+        Spacer(modifier = Modifier.height(45.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(checked = isChecked, onCheckedChange = {isChecked=it})
-                Text(text = "Remember me", fontSize = 18.sp, color = Blue200)
+                Checkbox(checked = isChecked, onCheckedChange = { isChecked = it })
+                Text(text = stringResource(R.string.remember_me), fontSize = 18.sp, color = Blue200)
             }
             Spacer(modifier = Modifier.width(45.dp))
             TextButton(onClick = { /*TODO*/ }) {
-                Text(text = "Forget passwod?", fontSize = 18.sp, color = Blue200)
+                Text(text = stringResource(R.string.forget_password), fontSize = 18.sp, color = Blue200)
             }
         }
+
 
         Spacer(modifier = Modifier.height(40.dp))
 
         Button(
             onClick = {
-                if (userName.isEmpty() || password.isEmpty() || password.length > 4) {
+                if (userName.isEmpty() || password.isEmpty() || password.length < 4 || (userName.contains(
+                        regex
+                    ))
+                ) {
                     Toast.makeText(
                         context,
                         "please enter valid username and password",
                         Toast.LENGTH_LONG
                     ).show()
 
-                }
-                if (userName.contains(regex))
-                    Toast.makeText(context, "invalid user name", Toast.LENGTH_LONG).show()
+                } else Toast.makeText(
+                    context,
+                    "success",
+                    Toast.LENGTH_LONG
+                ).show()
 
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = Blue200),
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .height(40.dp),
-            content = { Text(text = "LOGIN", fontSize = 20.sp, color = TextWhite) },
+            content = { Text(text = stringResource(R.string.login), fontSize = 20.sp, color = TextWhite) },
             shape = RoundedCornerShape(50)
         )
 
