@@ -7,4 +7,5 @@
     <string name="login">LOGIN</string>
     <string name="login_text">Login</string>
     <string name="please_sign_text">please sign in to continue</string>
+    <string name="title_activity_list">ListActivity</string>
 </resources>
